@@ -1,0 +1,107 @@
+<!-- Template for the Account Details Page -->
+
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <title>Account Information</title>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel = "stylesheet" href = "/static/css/account_details.css">
+    <script src="/static/javascript/account_details.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class = "navbar navbar-expand-lg navbar-light bg-dark">
+      <a class = "navbar-brand" href = "restaurant_page.html" style="color: white;">Restaurants</a>
+      <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
+      </button>
+      <a class = "navbar-brand" href = "review_page.html" style="color: white;">Reviews</a>
+      <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
+      </button>
+      <div class = "collapse navbar-collapse" id = "navbarNav">
+        <form class = "form-inline ml-auto" action = "/search" method = "POST">
+          <input class = "form-control mr-sm-2" type = "text" id = "search" name = "search" placeholder = "Name/Cuisine/Rating" style = "color: black;">
+          <button class = "btn btn-outline-success my-2 my-sm-0" type = "submit">Search</button>
+        </form>
+        <ul class = "navbar-nav ml-2">
+          <li class = "nav-item">
+            <a class = "nav-link" href = "add_restaurant.html" style = "color: white;">Add Restaurant</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "add_review.html" style = "color: white;">Add Review</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "account_details.html" style = "color: white;">Account</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "data_visualisation.html" style = "color: white;">Visualization</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "/" style = "color: white;">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Body of the Page -->
+    <div class = "container mt-2">
+      <div class = "container" style = "padding: 20px">
+        <div class = "row">
+          <div class = "col-md-6" id = "left"></div>
+          <div class = "col-md-6" id = "right">
+            <h2>Account Details</h2>
+            <div class = "row">
+              <!-- Getting the user details from the back-end and displaying them -->
+              {% for u in user %}
+                <div class = "col-md-3">
+                  <p>First Name:</p>
+                  <p>Last Name:</p>
+                  <p>Username:</p>
+                  <p>Email:</p>
+                  <p>Password:</p>
+                </div>
+                <div class = "col-md-9">
+                  <p>{{ u.firstname }}</p>
+                  <p>{{ u.lastname }}</p>
+                  <p>{{ u.username }}</p>
+                  <p>{{ u.email }}</p>
+                  <p>{{ u.password }}</p>
+                </div>
+            </div>
+            <div class = "row">
+              <!-- Button for deleting the account -->
+              <div class = "col-md-4">
+                <form method = "POST" action = "/delete-account">
+                  <input type = "hidden" name = "username" value = " {{ u.username }} ">
+                  <button type = "submit" class = "btn btn-danger">Delete Account</button>
+                </form>
+              </div>
+              <!-- Button foe updating the user information -->
+              <div class = "col-md-4">
+                <form method = "POST" action = "/update-account">
+                  <input type = "hidden" name = "username" value = " {{ u.username }} ">
+                  <button type = "submit" class = "btn btn-secondary">Edit Information</button>
+                </form>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% if error %}
+      <script>
+        alert("{{ error }}");
+      </script>
+    {% endif %}
+
+    <script src = "https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  </body>
+</html>

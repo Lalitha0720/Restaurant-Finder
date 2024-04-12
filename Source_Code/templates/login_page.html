@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "/static/css/login_page.css">
+    <script src = "/static/javascript/login_page.js"></script>
+  </head>
+  <body>
+    <div class = "container">
+      <div class = "row">
+        <div class = "col-md-6" id = "left"></div>
+        <div class = "col-md-6" id = "right1">
+          <div class = "login-box">
+            <h2>Login</h2>
+            <form id = "loginForm" action = "/login" method = "post">
+              <div class = "form-group">
+                <label for = "username">Username</label>
+                <input type = "text" class = "form-control" id = "username" name = "username" placeholder = "Enter your username" required>
+              </div>
+              <div class = "form-group">
+                <label for = "password">Password</label>
+                <input type = "password" class = "form-control" id = "password" name = "password" placeholder = "Enter your password" required>
+              </div>
+              <button type = "submit" class = "btn btn-primary">Login</button>
+            </form>
+          </div>
+          <div class = "sign-up">
+            <p>Don't have an account? Sign up<a href = "signup_page.html"> here.</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if error %}
+      <script>
+        alert("{{ error }}");
+      </script>
+    {% endif %}
+    
+    <script src = "https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+  </body>
+</html>
+

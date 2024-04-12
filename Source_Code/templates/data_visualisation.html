@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <title>Data Visualisation</title>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <nav class = "navbar navbar-expand-lg navbar-light bg-dark">
+      <a class = "navbar-brand" href = "restaurant_page.html" style="color: white;">Restaurants</a>
+      <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
+      </button>
+      <a class = "navbar-brand" href = "review_page.html" style="color: white;">Reviews</a>
+      <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
+      </button>
+      <div class = "collapse navbar-collapse" id = "navbarNav">
+        <form class = "form-inline ml-auto" action = "/search" method = "POST">
+          <input class = "form-control mr-sm-2" type = "text" id = "search" name = "search" placeholder = "Name/Cuisine/Rating" style = "color: black;">
+          <button class = "btn btn-outline-success my-2 my-sm-0" type = "submit">Search</button>
+        </form>
+        <ul class = "navbar-nav ml-2">
+          <li class = "nav-item">
+            <a class = "nav-link" href = "add_restaurant.html" style = "color: white;">Add Restaurant</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "add_review.html" style = "color: white;">Add Review</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "account_details.html" style = "color: white;">Account</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "data_visualisation.html" style = "color: white;">Visualization</a>
+          </li>
+          <li class = "nav-item">
+            <a class = "nav-link" href = "/" style = "color: white;">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class = "container mt-2">
+      <div class = "container" style = "padding: 20px">
+        <div class = "row">
+          <div class = "col">
+            <h4 style = "text-align: center;">Restaurants and Ratings</h4>
+          </div>
+        </div>
+        <div class = "row">
+          <div class = "col">
+            <canvas id = "piechart" width = "400" height = "400"></canvas>
+          </div>
+        </div>
+        <br><br><br>
+        <div class = "row">
+          <div class = "col">
+            <h4 style = "text-align: center;">Restaurants and Cuisines</h4>
+          </div>
+        </div>
+        <div class = "row">
+          <div class = "col">
+            <canvas id = "pieChart" width = "400" height = "400"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+        var ctx = document.getElementById('pieChart').getContext('2d'); 
+        var ctx1 = document.getElementById('piechart').getContext('2d');
+
+        // Use the restaurant_names and ratings for the bar graph
+        var restaurant_names = {{ restaurant_names | tojson | safe }}
+        var ratings = {{ ratings | tojson | safe }}
+        var barChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: restaurant_names,
+            datasets: [{
+              label: 'Average Ratings',
+              data: ratings,
+              backgroundColor: 'rgba(215, 159, 64, 0.7)',
+              borderColor: 'rgba(215, 159, 64, 0.7)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                ticks: {
+                  display: false // This will hide the restaurant names on the x-axis
+                }
+              },
+              y: {
+                beginAtZero: true,
+                max: 5
+              }
+            }
+          }
+        })
+
+        // Use the cuisine_types and counts for the pie chart
+        var cuisineTypes = {{ cuisine_types | tojson | safe }};
+        var counts = {{ counts | tojson | safe }};
+        var data = {
+          labels: cuisineTypes,
+          datasets: [{
+          data: counts,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',],}]};
+        var options = {
+          responsive: true,
+          maintainAspectRatio: false,};
+        var pieChart = new Chart(ctx, {
+          type: 'pie',
+          data: data,
+          options: options});
+      });
+    </script>
+
+    <script src = "https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

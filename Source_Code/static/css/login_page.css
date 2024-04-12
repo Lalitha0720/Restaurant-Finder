@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTN8fHxlbnwwfHx8fHw%3D');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.login-box, .sign-up-box {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.sign-up {
+  margin: 10px;
+}
+#right1 {
+  margin-top: 20%;
+  margin-bottom: 15%;
+}
+#right2 {
+  margin-top: 10%;
+  margin-bottom: 15%;
+}
